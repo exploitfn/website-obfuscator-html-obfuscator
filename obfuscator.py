@@ -2,6 +2,8 @@ import os
 import base64
 import time
 
+os.system("pip install bs4")
+
 # made my ud man
 def obfuscate_html_file(file_path):
     with open(file_path, 'r') as file:
