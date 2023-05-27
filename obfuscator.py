@@ -1,18 +1,15 @@
 import os
-import base64
+import urllib.parse
 import time
 
-os.system("pip install bs4")
-
-# made my ud man
 def obfuscate_html_file(file_path):
     with open(file_path, 'r') as file:
         html_code = file.read()
 
-    obfuscated_html = base64.b64encode(html_code.encode()).decode()
+    obfuscated_html = urllib.parse.quote(html_code)
 
     with open(file_path, 'w') as file:
-        file.write('<script>document.documentElement.innerHTML = atob("{}");</script>'.format(obfuscated_html))
+        file.write('<html><body><script>document.write(decodeURIComponent("{}"));</script></body></html>'.format(obfuscated_html))
 
 def obfuscate_html_files_in_directory(directory):
     total_files = 0
@@ -33,8 +30,7 @@ def obfuscate_html_files_in_directory(directory):
                 print("\r  [+] Obfuscating HTML Files: {}% done.".format(percent_done), end="")
                 time.sleep(0.5)
 
-    print("\n  [+] Obfuscated Files Successfully !!")
+    print("\n  [+] Obfuscated Files Successfully!")
 
 current_directory = os.getcwd()
-
 obfuscate_html_files_in_directory(current_directory)
